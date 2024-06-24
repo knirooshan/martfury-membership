@@ -1,0 +1,13 @@
+{
+    "id": "botble/membership",
+    "name": "Membership",
+    "namespace": "Botble\\Membership\\",
+    "provider": "Botble\\Membership\\Providers\\MembershipServiceProvider",
+    "author": "Aradhana Group",
+    "url": "https://aradhana.au",
+    "version": "1.0.0",
+    "description": "Membership plugin for Ecommerce site",
+    "require": [
+        "botble/ecommerce"
+    ]
+}
