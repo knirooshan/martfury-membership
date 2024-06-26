@@ -4,22 +4,6 @@ return [
     'name' => 'Membership',
     'description' => 'Config email templates for Membership',
     'templates' => [
-        'new_membership' => [
-            'title' => 'plugins/membership::membership.email.new_membership_title',
-            'description' => 'plugins/membership::membership.email.new_membership_description',
-            'subject' => 'New membership purchase at {{ site_title }}',
-            'can_off' => true,
-            'enabled' => true,
-            'variables' => [
-                'product_list' => 'plugins/ecommerce::ecommerce.product_list',
-                'customer_name' => 'plugins/ecommerce::ecommerce.customer_name',
-                'customer_phone' => 'plugins/ecommerce::ecommerce.customer_phone',
-                'customer_address' => 'plugins/ecommerce::ecommerce.customer_address',
-                'order' => 'Order',
-                'address' => 'Shipping address',
-                'products' => 'Order products',
-            ],
-        ],
         'welcome-member' => [
             'title' => 'Welcome Member',
             'description' => 'Send email to member after purchase',
@@ -38,6 +22,7 @@ return [
             'enabled' => false,
             'variables' => [
                 'customer_name' => 'plugins/ecommerce::ecommerce.customer_name',
+                'membership_expire_date' => 'plugins/membership::membership.membership_expire_date',
             ],
         ],
         'membership-expire' => [
@@ -48,6 +33,7 @@ return [
             'enabled' => false,
             'variables' => [
                 'customer_name' => 'plugins/ecommerce::ecommerce.customer_name',
+                'membership_expire_date' => 'plugins/membership::membership.membership_expire_date',
             ],
         ],
     ],

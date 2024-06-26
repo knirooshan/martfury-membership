@@ -11,7 +11,7 @@ return new class () extends Migration {
     {
         Schema::dropIfExists('memberships');
         Schema::dropIfExists('membership_plans');
-        Schema::dropIfExists('membership_product_prices');
+        Schema::dropIfExists('membership_products');
 
         Schema::create('membership_plans', function(Blueprint $table){
             $table->id();
@@ -23,11 +23,13 @@ return new class () extends Migration {
             $table->timestamps();
         });
 
-        Schema::create('membership_product_prices', function(Blueprint $table){
+        Schema::create('membership_products', function(Blueprint $table){
             $table->id();
             $table->foreignId('product_id');
             $table->foreignId('membership_plan_id');
             $table->integer('price');
+            $table->integer('product_limit')->default(1);
+            $table->integer('limit_duration')->default(30);
             $table->timestamps();
         });
 
@@ -38,6 +40,7 @@ return new class () extends Migration {
             $table->string('status', 60)->default(MembershipStatusEnum::ACTIVE);
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
+            $table->integer('savings')->default(0);
             $table->timestamps();
         });
     }
