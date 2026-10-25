@@ -2,7 +2,7 @@
 
 namespace Botble\Membership\Forms;
 
-use Botble\Base\Enums\BaseStatusEnum;
+use Botble\Membership\Enums\PlanStatusEnum;
 use Botble\Base\Forms\FormAbstract;
 use Botble\Ecommerce\Models\Product;
 use Botble\Membership\Http\Requests\PlanRequest;
@@ -131,9 +131,10 @@ class PlanForm extends FormAbstract
                 'default_value' => 0,
             ])
             ->add('status', 'customSelect', [
-                'label'      => trans('core/base::tables.status'),
-                'label_attr' => ['class' => 'control-label required'],
-                'choices'    => BaseStatusEnum::labels(),
+                'label'         => trans('core/base::tables.status'),
+                'label_attr'    => ['class' => 'control-label required'],
+                'choices'       => PlanStatusEnum::labels(),
+                'default_value' => PlanStatusEnum::ACTIVE,
             ])
             ->setBreakFieldPoint('status');
     }

@@ -2,7 +2,7 @@
 
 namespace Botble\Membership\Models;
 
-use Botble\Base\Enums\BaseStatusEnum;
+use Botble\Membership\Enums\PlanStatusEnum;
 use Botble\Base\Models\BaseModel;
 use Botble\Base\Traits\EnumCastable;
 use Botble\Ecommerce\Models\Product;
@@ -43,7 +43,7 @@ class Plan extends BaseModel
      * @var array
      */
     protected $casts = [
-        'status'                   => BaseStatusEnum::class,
+        'status'                   => PlanStatusEnum::class,
         'allow_coupon_combination' => 'boolean',
         'amount'                   => 'float',
         'shipping_discount_percentage' => 'float',

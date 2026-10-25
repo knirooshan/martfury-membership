@@ -3,6 +3,7 @@
 namespace Botble\Membership\Tables;
 
 use BaseHelper;
+use Botble\Membership\Enums\MembershipStatusEnum;
 use Botble\Membership\Repositories\Interfaces\MembershipInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Html;
@@ -60,13 +61,25 @@ class MembershipTable extends TableAbstract
                 return '<span class="text-success font-weight-bold">' . format_price($item->savings ?: 0) . '</span>';
             })
             ->editColumn('status', function ($item) {
-                $class = 'secondary';
-                if ($item->status === 'active') {
-                    $class = 'success';
-                } elseif ($item->status === 'pending_payment') {
-                    $class = 'warning';
+                if ($item->status instanceof \Botble\Base\Supports\Enum && method_exists($item->status, 'toHtml')) {
+                    return clean($item->status->toHtml());
                 }
-                return '<span class="label label-' . $class . ' status-label">' . ucfirst($item->status) . '</span>';
+
+                $status = strtolower((string) $item->status);
+                switch ($status) {
+                    case 'active':
+                        return '<span class="label-success status-label">' . trans('plugins/membership::membership.statuses.active') . '</span>';
+                    case 'pending_payment':
+                    case 'pending':
+                        return '<span class="label-warning status-label">' . trans('plugins/membership::membership.statuses.pending_payment') . '</span>';
+                    case 'expired':
+                        return '<span class="label-danger status-label">' . trans('plugins/membership::membership.statuses.expired') . '</span>';
+                    case 'cancelled':
+                        return '<span class="label-default status-label">' . trans('plugins/membership::membership.statuses.cancelled') . '</span>';
+                    case 'inactive':
+                    default:
+                        return '<span class="label-danger status-label">' . trans('plugins/membership::membership.statuses.inactive') . '</span>';
+                }
             })
             ->editColumn('checkbox', function ($item) {
                 return $this->getCheckbox($item->id);
@@ -156,12 +169,8 @@ class MembershipTable extends TableAbstract
             'status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
-                'choices'  => [
-                    'active'          => trans('plugins/membership::membership.active'),
-                    'inactive'        => trans('plugins/membership::membership.inactive'),
-                    'pending_payment' => trans('plugins/membership::membership.pending_payment'),
-                ],
-                'validate' => 'required|in:active,inactive,pending_payment',
+                'choices'  => MembershipStatusEnum::labels(),
+                'validate' => 'required|in:' . implode(',', MembershipStatusEnum::values()),
             ],
         ];
     }

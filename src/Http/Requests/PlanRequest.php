@@ -2,7 +2,7 @@
 
 namespace Botble\Membership\Http\Requests;
 
-use Botble\Base\Enums\BaseStatusEnum;
+use Botble\Membership\Enums\PlanStatusEnum;
 use Botble\Support\Http\Requests\Request;
 use Illuminate\Validation\Rule;
 
@@ -19,7 +19,7 @@ class PlanRequest extends Request
             'shipping_discount_percentage' => 'nullable|numeric|min:0|max:100',
             'global_discount_percentage'   => 'nullable|numeric|min:0|max:100',
             'allow_coupon_combination'     => 'boolean',
-            'status'                       => Rule::in(BaseStatusEnum::values()),
+            'status'                       => Rule::in(PlanStatusEnum::values()),
         ];
     }
 }

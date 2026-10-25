@@ -4,6 +4,7 @@ namespace Botble\Membership\Forms;
 
 use Botble\Base\Forms\FormAbstract;
 use Botble\Ecommerce\Models\Customer;
+use Botble\Membership\Enums\MembershipStatusEnum;
 use Botble\Membership\Http\Requests\MembershipRequest;
 use Botble\Membership\Models\Membership;
 use Botble\Membership\Models\Plan;
@@ -59,13 +60,10 @@ class MembershipForm extends FormAbstract
                 'default_value' => false,
             ])
             ->add('status', 'customSelect', [
-                'label'      => trans('core/base::tables.status'),
-                'label_attr' => ['class' => 'control-label required'],
-                'choices'    => [
-                    'active'          => trans('plugins/membership::membership.active'),
-                    'inactive'        => trans('plugins/membership::membership.inactive'),
-                    'pending_payment' => trans('plugins/membership::membership.pending_payment'),
-                ],
+                'label'         => trans('core/base::tables.status'),
+                'label_attr'    => ['class' => 'control-label required'],
+                'choices'       => MembershipStatusEnum::labels(),
+                'default_value' => MembershipStatusEnum::ACTIVE,
             ])
             ->setBreakFieldPoint('status');
     }

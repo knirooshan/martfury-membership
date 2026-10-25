@@ -3,13 +3,17 @@
 namespace Botble\Membership\Models;
 
 use Botble\Base\Models\BaseModel;
+use Botble\Base\Traits\EnumCastable;
 use Botble\Ecommerce\Models\Customer;
+use Botble\Membership\Enums\MembershipStatusEnum;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Membership extends BaseModel
 {
+    use EnumCastable;
+
     /**
      * @var string
      */
@@ -35,6 +39,7 @@ class Membership extends BaseModel
      * @var array
      */
     protected $casts = [
+        'status'                => MembershipStatusEnum::class,
         'start_date'            => 'date',
         'end_date'              => 'date',
         'last_reminder_sent_at' => 'date',

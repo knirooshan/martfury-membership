@@ -28,4 +28,8 @@ return [
     'status'                       => 'Status',
     'active'                       => 'Active',
     'inactive'                     => 'Inactive',
+    'statuses'                     => [
+        'active'   => 'Active',
+        'inactive' => 'Inactive',
+    ],
 ];

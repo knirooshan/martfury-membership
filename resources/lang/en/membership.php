@@ -15,6 +15,13 @@ return [
     'active'                       => 'Active',
     'inactive'                     => 'Inactive',
     'pending_payment'              => 'Pending Payment',
+    'statuses'                     => [
+        'active'          => 'Active',
+        'inactive'        => 'Inactive',
+        'expired'         => 'Expired',
+        'pending_payment' => 'Pending Payment',
+        'cancelled'       => 'Cancelled',
+    ],
     'my_membership'                => 'My Membership',
     'days_remaining'               => 'Days Remaining',
     'renew_now'                    => 'Renew Membership',

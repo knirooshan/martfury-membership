@@ -3,7 +3,7 @@
 namespace Botble\Membership\Tables;
 
 use BaseHelper;
-use Botble\Base\Enums\BaseStatusEnum;
+use Botble\Membership\Enums\PlanStatusEnum;
 use Botble\Membership\Repositories\Interfaces\PlanInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Html;
@@ -58,10 +58,18 @@ class PlanTable extends TableAbstract
                 return $this->getCheckbox($item->id);
             })
             ->editColumn('created_at', function ($item) {
-                return BaseHelper::formatDate($item->created_at);
+                return $item->created_at ? BaseHelper::formatDate($item->created_at) : '—';
             })
             ->editColumn('status', function ($item) {
-                return $item->status->toHtml();
+                if ($item->status instanceof \Botble\Base\Supports\Enum && method_exists($item->status, 'toHtml')) {
+                    return clean($item->status->toHtml());
+                }
+
+                $val = is_object($item->status) ? $item->status->getValue() : (string) $item->status;
+                if ($val === 'active' || $val === 'published') {
+                    return '<span class="label-success status-label">' . trans('plugins/membership::plans.statuses.active') . '</span>';
+                }
+                return '<span class="label-danger status-label">' . trans('plugins/membership::plans.statuses.inactive') . '</span>';
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
@@ -151,8 +159,8 @@ class PlanTable extends TableAbstract
             'status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
-                'choices'  => BaseStatusEnum::labels(),
-                'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
+                'choices'  => PlanStatusEnum::labels(),
+                'validate' => 'required|in:' . implode(',', PlanStatusEnum::values()),
             ],
         ];
     }
