@@ -1,0 +1,9 @@
+{
+  "name": "Membership",
+  "namespace": "Botble\\Membership\\",
+  "provider": "Botble\\Membership\\Providers\\MembershipServiceProvider",
+  "author": "Aradhana",
+  "url": "https://grabandgo.lk",
+  "version": "1.0.0",
+  "description": "Enterprise Membership & Customer Tier Management for Botble & Martfury"
+}
